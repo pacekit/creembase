@@ -1,0 +1,11 @@
+User-agent: *
+
+Disallow: /api/
+
+# === PRODUCTION (Go Live) ===
+# To allow search engines, uncomment the line below:
+# Allow: /
+
+# === DEMO (Current) ===
+# To block search engines, keep the line below:
+Disallow: /

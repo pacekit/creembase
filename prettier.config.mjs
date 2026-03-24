@@ -1,0 +1,23 @@
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+    printWidth: 120,
+    tabWidth: 4,
+    semi: true,
+    bracketSpacing: true,
+    arrowParens: "always",
+    bracketSameLine: true,
+    importOrder: [
+        "^@/assets/(.*)$",
+        "^(react|next)(/.*)?$",
+        "<THIRD_PARTY_MODULES>",
+        "^@/features/(.*)$",
+        "^@/(hooks|lib)/(.*)$",
+        "^@/components/(.*)$",
+        "^@/(.*)$",
+        "^[./]",
+    ],
+    importOrderGroupNamespaceSpecifiers: true,
+    plugins: ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+    importOrderSeparation: true,
+    importOrderSortSpecifiers: true,
+};
