@@ -82,7 +82,7 @@ bun run test:e2e --ui
 ```
 
 ---
-
+   
 ## 📚 Deep Dive: Features & Architecture
 
 This section covers how the boilerplate works under the hood and its folder structure.
