@@ -7,7 +7,7 @@ export const Links = {
     },
     external: {
         website: "https://pacekit.dev/",
-        buy: "https://github.com/pacekit/supabase-creem-nextjs",
+        buy: "https://github.com/pacekit/creembase",
         discord: "https://pacekit.dev/discord",
         github: "https://github.com/pacekit",
         x: "https://x.com/withden_",
