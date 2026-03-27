@@ -28,9 +28,7 @@ export const PricingFaqs = () => {
         <section className="mt-24 space-y-12">
             <div className="mx-auto flex max-w-232 flex-col items-center space-y-4 text-center">
                 <h2 className="text-2xl font-bold sm:text-3xl md:text-4xl">FAQs</h2>
-                <p className="text-muted-foreground max-w-[85%] sm:text-lg">
-                    Got questions? We've got answers.
-                </p>
+                <p className="text-muted-foreground max-w-[85%] sm:text-lg">Got questions? We've got answers.</p>
             </div>
 
             <div className="mx-auto max-w-232">
@@ -38,9 +36,7 @@ export const PricingFaqs = () => {
                     {FAQS.map((faq, index) => (
                         <AccordionItem key={index} value={`item-${index}`}>
                             <AccordionTrigger className="text-base">{faq.question}</AccordionTrigger>
-                            <AccordionContent className="text-muted-foreground text-sm">
-                                {faq.answer}
-                            </AccordionContent>
+                            <AccordionContent className="text-muted-foreground text-sm">{faq.answer}</AccordionContent>
                         </AccordionItem>
                     ))}
                 </Accordion>

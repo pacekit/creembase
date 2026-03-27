@@ -8,6 +8,7 @@ const eslintConfig = defineConfig([
     globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", ".source/**"]),
     {
         rules: {
+            "react/no-unescaped-entities": "off",
             "@next/next/no-img-element": "off",
             "@typescript-eslint/no-unused-vars": [
                 "error",
