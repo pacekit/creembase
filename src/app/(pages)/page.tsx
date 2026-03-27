@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { getSupabaseUser } from "@/features/supabase/user";
 
 import { Pricing } from "@/components/features/creem/Pricing";
@@ -14,6 +16,12 @@ const MarketingPage = async () => {
             <Features />
             <section id="pricing" className="container py-16 md:px-12 md:py-20 lg:py-28 xl:px-24">
                 <Pricing user={user} />
+                <p className="mt-2 xl:mt-3">
+                    For more information, view the full{" "}
+                    <Link href="/payments/pricing" className="text-primary hover:underline">
+                        pricing
+                    </Link>
+                </p>
             </section>
             <CTA />
         </div>
