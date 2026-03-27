@@ -6,20 +6,11 @@ import { createSupabaseServerClient } from "@/features/supabase/server";
 
 import { Links } from "@/lib/links";
 
+import { SignInSchema, SignUpSchema, signInSchema, signUpSchema } from "./schema";
+
 const oauthProviderSchema = z.enum(["google", "github"]);
 
-const signInSchema = z.object({
-    email: z.email(),
-    password: z.string().min(8),
-});
-
-const signUpSchema = z.object({
-    name: z.string().min(2).max(120),
-    email: z.email(),
-    password: z.string().min(8),
-});
-
-export async function signInAction(input: unknown) {
+export async function signInAction(input: SignInSchema) {
     const parsed = signInSchema.safeParse(input);
     if (!parsed.success) return { error: "Invalid sign-in payload" };
 
@@ -30,7 +21,7 @@ export async function signInAction(input: unknown) {
     return { redirectTo: Links.admin };
 }
 
-export async function signUpAction(input: unknown) {
+export async function signUpAction(input: SignUpSchema) {
     const parsed = signUpSchema.safeParse(input);
     if (!parsed.success) return { error: "Invalid sign-in payload" };
 
@@ -47,8 +38,8 @@ export async function signUpAction(input: unknown) {
     return { redirectTo: Links.admin };
 }
 
-export async function startOAuthAction(input: unknown) {
-    const parsed = oauthProviderSchema.safeParse((input as { provider?: unknown })?.provider);
+export async function startOAuthAction(input: { provider?: string }) {
+    const parsed = oauthProviderSchema.safeParse(input?.provider);
     if (!parsed.success) throw new Error("Invalid OAuth provider");
 
     const supabase = createSupabaseServerClient();

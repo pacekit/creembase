@@ -2,35 +2,26 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SubmitEvent } from "react";
-import { useState } from "react";
+import { SubmitEvent, useState } from "react";
 
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { MailIcon, UserIcon, UserPlusIcon } from "lucide-react";
 import { toast } from "sonner";
-import { z } from "zod";
 
 import { signUpAction, startOAuthAction } from "@/features/supabase/auth";
+import { SignUpSchema, signUpSchema } from "@/features/supabase/schema";
 
 import { FormInput, FormPasswordInput, setFieldError } from "@/components/shared/forms";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-
-const schema = z.object({
-    name: z.string("Please enter your name.").trim().min(4, "Name must be at least 4 characters long."),
-    email: z.email("Please enter a valid email address."),
-    password: z.string("Please create a password.").trim().min(8, "Password must be at least 8 characters long."),
-});
-
-type Schema = z.infer<typeof schema>;
 
 export const SignUpForm = () => {
     const router = useRouter();
     const [oauthLoading, setOauthLoading] = useState<string | null>(null);
 
     const signUpMutation = useMutation({
-        mutationFn: async (value: Schema) => {
+        mutationFn: async (value: SignUpSchema) => {
             const { redirectTo, error } = await signUpAction(value);
             if (!error && redirectTo) {
                 return router.replace(redirectTo);
@@ -46,10 +37,10 @@ export const SignUpForm = () => {
     });
 
     const form = useForm({
-        defaultValues: {} as Schema,
+        defaultValues: {} as SignUpSchema,
         validationLogic: revalidateLogic(),
         validators: {
-            onDynamic: schema,
+            onDynamic: signUpSchema,
         },
         onSubmit: ({ value }) => {
             signUpMutation.mutate(value);

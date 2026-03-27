@@ -2,17 +2,16 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SubmitEvent } from "react";
-import { useState } from "react";
+import { SubmitEvent, useState } from "react";
 
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { LogInIcon, MailIcon } from "lucide-react";
 import { toast } from "sonner";
-import { z } from "zod";
 
 import { signInAction, startOAuthAction } from "@/features/supabase/auth";
 import { demoUser } from "@/features/supabase/demo-user";
+import { SignInSchema, signInSchema } from "@/features/supabase/schema";
 
 import { setFieldError } from "@/components/shared/forms";
 import { FormInput } from "@/components/shared/forms/FormInput";
@@ -20,19 +19,12 @@ import { FormPasswordInput } from "@/components/shared/forms/FormPasswordInput";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
-const schema = z.object({
-    email: z.email("Please enter a valid email address."),
-    password: z.string("Please create a password.").min(8, "Password must be at least 8 characters long."),
-});
-
-type Schema = z.infer<typeof schema>;
-
 export const SignInForm = () => {
     const router = useRouter();
     const [oauthLoading, setOauthLoading] = useState<string | null>(null);
 
     const signInMutation = useMutation({
-        mutationFn: async (value: Schema) => {
+        mutationFn: async (value: SignInSchema) => {
             const { redirectTo, error } = await signInAction(value);
             if (!error && redirectTo) {
                 return router.replace(redirectTo);
@@ -46,10 +38,10 @@ export const SignInForm = () => {
     });
 
     const form = useForm({
-        defaultValues: demoUser as Schema,
+        defaultValues: demoUser as SignInSchema,
         validationLogic: revalidateLogic(),
         validators: {
-            onDynamic: schema,
+            onDynamic: signInSchema,
         },
         onSubmit: ({ value }) => {
             signInMutation.mutate(value);
